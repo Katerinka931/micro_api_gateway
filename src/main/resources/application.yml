@@ -1,0 +1,30 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api_gateway
+  datasource:
+    url: jdbc:postgresql://localhost:1978/microUsers
+    username: postgres
+    password: 1
+    driver-class-name: org.postgresql.Driver
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+  cloud:
+    gateway:
+      routes:
+        - id: 1
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/forum/**
+        - id: 2
+          uri: http://localhost:5000
+          predicates:
+            - Path=/api/advertisement/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+
+jwt:
+  secret: mySecretKey
