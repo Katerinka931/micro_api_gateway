@@ -6,6 +6,9 @@ spring:
   application:
     name: api_gateway
   cloud:
+    loadbalancer:
+      retry:
+        enabled: true
     gateway:
       routes:
         - id: discussions
@@ -24,4 +27,11 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
 
+#    spring.main.allow-circular-references=true
