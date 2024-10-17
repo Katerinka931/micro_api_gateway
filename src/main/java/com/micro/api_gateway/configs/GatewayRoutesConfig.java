@@ -12,6 +12,8 @@ public class GatewayRoutesConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder, AuthFilter authFilter) {
         return builder.routes()
+                .route("auth", r -> r.path("/api/auth/**")
+                        .uri("lb://auth"))
                 .route("forum", r -> r.path("/api/forum/**")
                         .filters(f -> f.filter(authFilter.apply(new AuthFilter.Config())))
                         .uri("lb://discussions"))
