@@ -1,6 +1,6 @@
 package com.micro.api_gateway.filters;
 
-import com.micro.api_gateway.models.UserDetailsResponse;
+import com.micro.api_gateway.models.UserDetails;
 import com.micro.api_gateway.services.ApiClient;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -31,10 +31,10 @@ public class TokenGlobalFilter implements GlobalFilter, Ordered {
             request.mutate().header("token-info", ";none");
         else {
             ApiClient apiClient = apiClientObjectProvider.getObject();
-            CompletableFuture<UserDetailsResponse> future = CompletableFuture.supplyAsync(() ->
+            CompletableFuture<UserDetails> future = CompletableFuture.supplyAsync(() ->
                     apiClient.validateToken(token));
 
-            UserDetailsResponse tokenInfo;
+            UserDetails tokenInfo;
             try {
                 tokenInfo = future.get();
             } catch (Exception ex) {
