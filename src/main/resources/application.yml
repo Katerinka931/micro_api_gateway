@@ -3,10 +3,24 @@ server:
 spring:
   main:
     web-application-type: reactive
+    allow-bean-definition-overriding: true
   application:
     name: api_gateway
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            exposedHeaders:
+              - "*"
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       routes:
         - id: discussions
           uri: lb://discussions
@@ -20,6 +34,10 @@ spring:
           uri: lb://auth
           predicates:
             - Path=/api/auth/**
+        - id: ui
+          uri: http://localhost:4200
+          predicates:
+            - Path=/index.html,/*.js,/*.css
       discovery:
         locator:
           enabled: true

@@ -1,7 +1,7 @@
 package com.micro.api_gateway.services;
 
+import com.micro.api_gateway.models.UserDetailsResponse;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface ApiClient {
 
     @PostMapping("/api/auth/validate")
-    ResponseEntity<String> validateToken(@RequestHeader("Authorization") String token);
+    UserDetailsResponse validateToken(@RequestHeader("Authorization") String token);
 }
