@@ -12,4 +12,5 @@ import lombok.Setter;
 public class UserDetails {
     private String username;
     private String role;
+    private String token;
 }
